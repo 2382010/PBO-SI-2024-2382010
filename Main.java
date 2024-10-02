@@ -1,13 +1,18 @@
 import java.util.Scanner;
 
-public class Main {
+public static class Main {
     public static String[] todos = new String[3];
     public static Scanner scanner  = new Scanner(System.in);
     public static void main(String[] args) {
+        System.out.println("BEFORE EDIT");
         addTodoList("Mewarnai");
         addTodoList("Membaca");
         addTodoList("Bersepeda");
         addTodoList("Berkhotbah");
+        showTodoList();
+        editTodoList(3, "Bekerja");
+        RemoveTodoList(3);
+        System.out.println("AFTER DELETE");
         showTodoList();
     }
 
@@ -23,6 +28,7 @@ public class Main {
         }
     }
     public static void addTodoList(String todo) {
+        isArrayFull();
         resizeArrayIsFull(todo);
     }
 
@@ -58,7 +64,7 @@ public class Main {
             todos[i] = temp[i];
         }
     }
-    public static boolean RemoveTodoLis(Integer number){
+    public static boolean RemoveTodoList(Integer number){
         for (int i = number - 1; i < todos.length; i++){
             if (i == (todos.length) - 1){
                 todos[i] = null;
@@ -68,4 +74,23 @@ public class Main {
         }
         return true;
     }
+}
+public static boolean isSelectedTodoNotValid (Integer number){
+    if (number <= 0){
+        return true;
+    }
+    if (number-1 > Main.todos.length - 1){
+        return true;
+    }
+    if (Main.todos[number - 1] == null){
+        return true;
+    }
+    return false;
+}
+public static boolean editTodoList(Integer number, String newTodo){
+    if (isSelectedTodoNotValid(number)){
+        return false;
+    }
+    Main.todos[number - 1 ] = newTodo;
+    return true;
 }
